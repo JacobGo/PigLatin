@@ -1,0 +1,62 @@
+Ling 409: Formal Methods in Linguistics, Fall 2017
+Rajesh Bhatt & Ekaterina Vostrikova
+
+Pig Latin Project
+
+Part 1 Due: November 3, 2017
+Part 2 Due: November 10, 2017
+
+======================================================================
+
+Pig Latin is a secret language, obtained from English by the following
+transformation:
+
+  Move any consonant or consonant cluster that appears at
+  the start of a word to the end, and then append "ay".
+
+For instance:
+
+string ---> ingstray
+idle   ---> idleay
+prays  ---> ayspray
+
+For more info, see http://en.wikipedia.org/wiki/Pig_Latin
+
+======================================================================
+Do problems 1-3 individually and submit by November 3.
+
+(1) Write a function to convert a word into Pig Latin.
+
+(2) Write a function that converts a text, instead of individual
+    words, into Pig Latin.
+
+(3) Extend your program further to preserve capitalization, and
+    to keep "qu" together (i.e. so that "quiet" becomes "ietquay").
+
+======================================================================
+Form groups and do problems 4-6 as a group and submit by November 10. 
+We will most likely have group presentations in the November 10 class 
+or the class following that class. 
+
+(4) Write a function that 'decodes' Pig Latin back into English.
+    Report on the challenges that you encountered and how you have
+    tried to address these challenges.
+
+(5) Use resources like the word list or various corpora to improve your
+    reversal function.
+
+(6) Evaluate the accuracy of your functions (in 4 and 5) by running the 
+    following pipeline:
+    a. convert  English text to Pig Latin
+    b. convert the Pig Latin back to English
+    c. determine accuracy - if you are 100% accurate, the text that you
+    get back will be the text you started with. 
+
+======================================================================
+
+Send us your python file, including enough documentation for us
+to understand the reasoning behind your code, and the conclusions
+that you draw from it. The quality of your documentation partly
+determines your grade.
+
+======================================================================
