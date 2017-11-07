@@ -1,6 +1,5 @@
 import re
 from string import punctuation
-from nltk.book import *
 def pig_speak(word):
 	# empty string returns empty string
 	if word=='':
@@ -37,8 +36,6 @@ def text_to_pig(text):
 	# apply pig_speak to each word in text
 	return [pig_speak(word) for word in text]
 
-print(text_to_pig(text3))
-
-# converts input to pig latin 
-while True:
-	print(' '.join(text_to_pig(input().split(' '))))
+# # converts input to pig latin 
+# while True:
+# 	print(' '.join(text_to_pig(input().split(' '))))
