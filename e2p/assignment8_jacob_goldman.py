@@ -6,10 +6,17 @@ def pig_speak(word):
 		return ''
 
 	# just punctuation mark returns punctuation mark
-	if word in punctuation:
+	if word in punctuation or not word.isalpha():
 		return word
 
 	regex = '[AEIOUaeiou]' # any vowels in any order
+	
+	cap = []
+	for i in range(0, len(word)):
+		if word[i].isupper():
+			cap.append(True)
+		else:
+			cap.append(False)
 	
 	# find the index of the first vowel (if all consonants then re.search is None (false) so index = 0)
 	start = re.search(regex, word).start() if re.search(regex, word) else 0
@@ -23,9 +30,14 @@ def pig_speak(word):
 	result = re.sub('[^\w\s]', '', (word[start:] + word[:start] + 'ay').lower());
 
 	# if input is capitalized, add back captilization
-	if word[0].isupper():
-		result = result[0].upper() + result[1:]
-
+	temp = result[0:len(result) - 2]
+	result = ''
+	for i in range(0,len(temp)):
+		if cap[i]:
+			result += (temp[i].upper())
+		else:
+			result += (temp[i])
+	result = result + 'ay'
 	# if input ends with punctuation, append it
 	if not word[-1].isalpha():
 		result+=word[-1]
