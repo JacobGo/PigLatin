@@ -5,14 +5,15 @@ from pyg_latin.data.loader import words_dictionary, occ, frequencies
 from nltk.tokenize.moses import MosesTokenizer, MosesDetokenizer
 t, d = MosesTokenizer(), MosesDetokenizer()
 
-from flask import Flask
-from flask_restful import Resource, Api
+from flask import Flask, request
+from flask_restful import Resource, Api, marshal_with, reqparse
 
 app = Flask(__name__)
 api = Api(app)
 
 class Pigify(Resource):
-    def get(self, text):
+    def put(self):
+        text = request.form['text']
         original = text
         text = t.tokenize(text)
         text = pigify(text)
@@ -22,7 +23,8 @@ class Pigify(Resource):
         return res
 
 class Depigify(Resource):
-    def get(self, text):
+    def put(self):
+        text = request.form['text']
         original = text
         text = t.tokenize(text)
         text = depigify(text, frequencies, words_dictionary, occ)
@@ -32,7 +34,8 @@ class Depigify(Resource):
         return res
             
 class TestAccuracy(Resource):
-    def get(self, text):
+    def put(self):
+        text = request.form['text']
         original = text
         text = t.tokenize(text)
         new_text = depigify(pigify(text), frequencies, words_dictionary, occ)
@@ -57,9 +60,9 @@ class TestAccuracy(Resource):
                 'wrong_count': wrong_count}
         return res
 
-api.add_resource(Pigify, '/pigify/<string:text>')
-api.add_resource(Depigify, '/depigify/<string:text>')
-api.add_resource(TestAccuracy, '/test/<string:text>')
+api.add_resource(Pigify, '/pigify')
+api.add_resource(Depigify, '/depigify')
+api.add_resource(TestAccuracy, '/test')
 
 if __name__ == '__main__':
     app.run(debug=True)
