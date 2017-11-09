@@ -1,5 +1,5 @@
-from e2p.assignment8_jacob_goldman import text_to_pig
-from p2e.naive import pig_to_text
+from to_pig_latin import text_to_pig
+from freq_based import pig_to_text
 from nltk.corpus import words as _words,reuters,brown,gutenberg,wordnet,stopwords
 from nltk.probability import FreqDist
 
@@ -11,7 +11,7 @@ print('Loading word set...') # two options for our dictionary of english words, 
 # or this dict with ~30k more (from https://github.com/dwyl/english-words)
 with open('words_dictionary.json') as data_file:    
     words = json.load(data_file)
-
+print(len(words))
 # we generate a frequency distribution of onset consonant clusters to make an educated guess on names and other words not within our word set
 b_clust = FreqDist()
 for word in words:
@@ -33,34 +33,49 @@ def test_text(text):
     total = 0
     wrong = []
     for i in range(0, len(text)):
-        if text[i].isalpha():
+        if text[i].isalpha() or True:
             total += 1
             if text[i] == new_text[i]:
                 count += 1
             else:
                 wrong.append((text[i], new_text[i]))
     print("Accuracy:", count / total)
-    print(wrong[0:50])
-    print(len(set(wrong)))
+    print(set(wrong))
+    print(len(wrong))
     return count/total
 
-#test_text('Hello world!'.split())
-#test_text(gutenberg.words('melville-moby_dick.txt'))
+from nltk.tokenize.moses import MosesTokenizer, MosesDetokenizer
+t, d = MosesTokenizer(), MosesDetokenizer()
 
-# Test all Gutenberg Texts
-count = 0
-total = 0
-for fileid in gutenberg.fileids():
-    print(fileid)
-    count += test_text(gutenberg.words(fileid))
-    total += 1
-print(count / total)
-# result = 97.773%
-# lower than avg mostly due to less success with Shakespeare
+# test_text('Hello world!'.split())
+# # Result: 100%
 
-# while True:
-#     text = input()
-#     text = re.sub('[^\w\s]', '', text).split(' ')
-#     pig = text_to_pig(text)
-#     print(' '.join(pig))
-#     print(' '.join( pig_to_text(pig, freq, words, b_clust)))
+# test_text(gutenberg.words('melville-moby_dick.txt'))
+# # Result: 98.86014443971222%
+
+# f = open('simple_english.txt')
+# raw = f.read()
+# text = t.tokenize(raw)
+# test_text(text)
+# # Result: 98.74025194961008%
+
+# # Test all Gutenberg Texts
+# count = 0
+# total = 0
+# for fileid in gutenberg.fileids():
+#     print(fileid)
+#     count += test_text(gutenberg.words(fileid))
+#     total += 1
+# print(count / total)
+# # result = 97.75693571924204%
+# # lower than avg mostly due to less success with Shakespeare
+
+print('\nEnter text to be converted to Pig Latin and back:')
+while True:
+    text = input()
+    text = t.tokenize(text)
+    pig = text_to_pig(text)
+
+    print(' '.join(d.detokenize(pig)))
+    print(' '.join(d.detokenize(pig_to_text(pig, freq, words, b_clust))))
+    print()

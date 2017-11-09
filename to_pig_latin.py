@@ -1,3 +1,5 @@
+# @Author Jacob Goldman
+
 import re
 from string import punctuation
 def pig_speak(word):
